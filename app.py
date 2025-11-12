@@ -14,7 +14,7 @@ import os
 # Load Model and Vectorizer (Safe Method)
 # -----------------------------------
 # Find the correct absolute path of current app.py file
-BASE_DIR = os.path.dirname(os.path.abspath(_file_))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 model_path = os.path.join(BASE_DIR, "urdu_formality_model.pkl")
 vectorizer_path = os.path.join(BASE_DIR, "urdu_vectorizer.pkl")
