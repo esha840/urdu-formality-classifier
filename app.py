@@ -5,8 +5,33 @@ import pandas as pd
 # -----------------------------------
 # Load Model and Vectorizer
 # -----------------------------------
-model = pickle.load(open("urdu_formality_model.pkl", "rb"))
-vectorizer = pickle.load(open("urdu_vectorizer.pkl", "rb"))
+import streamlit as st
+import pickle
+import pandas as pd
+import os
+
+# -----------------------------------
+# Load Model and Vectorizer (Safe Method)
+# -----------------------------------
+# Find the correct absolute path of current app.py file
+BASE_DIR = os.path.dirname(os.path.abspath(_file_))
+
+model_path = os.path.join(BASE_DIR, "urdu_formality_model.pkl")
+vectorizer_path = os.path.join(BASE_DIR, "urdu_vectorizer.pkl")
+
+try:
+    with open(model_path, "rb") as f:
+        model = pickle.load(f)
+
+    with open(vectorizer_path, "rb") as f:
+        vectorizer = pickle.load(f)
+
+except FileNotFoundError:
+    st.error("❌ Model or vectorizer file not found. Please make sure both .pkl files are uploaded in your GitHub repo.")
+    st.stop()
+except Exception as e:
+    st.error(f"⚠ Error loading model/vectorizer: {e}")
+    st.stop()
 
 # -----------------------------------
 # Streamlit Web App UI
